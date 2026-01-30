@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vinayak P | Front End Developer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    /* Glow Animation */
+    @keyframes glow {
+      0% { box-shadow: 0 0 10px var(--primary); }
+      50% { box-shadow: 0 0 25px var(--primary); }
+      100% { box-shadow: 0 0 10px var(--primary); }
+    }
+
+    .profile-glow {
+      animation: glow 2.5s infinite ease-in-out;
+    }
+
+    /* Active Navbar Link */
+    nav a.active {
+      color: var(--primary);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 4px;
+    }
+
+
+    /* Professional UI Enhancements */
+    header {
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    @media(min-width: 768px) {
+      .hero-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 40px;
+      }
+    }
+
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    }
+
+    .section-title {
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      width: 60px;
+      height: 4px;
+      background: var(--primary);
+      display: block;
+      margin: 8px auto 0;
+      border-radius: 5px;
+    }
+
+
+    /* Scroll Animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    :root {
+      --bg-light: #f7f9fc;
+      --bg-dark: #0f172a;
+      --card-light: #ffffff;
+      --card-dark: #1e293b;
+      --text-light: #0f172a;
+      --text-dark: #f1f5f9;
+      --primary: #6366f1;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: var(--bg-dark);
+        color: var(--text-dark);
+      }
+      .card {
+        background: var(--card-dark);
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background: var(--bg-light);
+        color: var(--text-light);
+      }
+      .card {
+        background: var(--card-light);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    header {
+      padding: 20px 10%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      backdrop-filter: blur(10px);
+      z-index: 100;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      color: inherit;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    section {
+      padding: 80px 10%;
+    }
+
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+    }
+
+    .hero-content span {
+      color: var(--primary);
+    }
+
+    .hero-content p {
+      margin: 15px 0;
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: var(--primary);
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 15px;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      text-align: center;
+    }
+
+    .card {
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    }
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.cert-card {
+  background: #aa9d9d0f;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+  overflow: hidden;
+  text-align: center;
+  transition: 0.3s ease;
+}
+
+.cert-card:hover {
+  transform: translateY(-8px);
+}
+
+.cert-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.cert-card h3 {
+  padding: 10px;
+  font-size: 16px;
+}
+
+/* .cert-card a {
+  display: block;
+  padding: 10px;
+  background: #00ffd5;
+  color: rgba(22, 2, 2, 0.922);
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0 0 16px 16px;
+}
+
+.cert-card a:hover {
+  background: #00c9a7;
+}
+*/
+/* Responsive for mobile */
+@media (max-width: 900px) {
+  .cert-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
+  }
+}
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .skill-bar {
+      margin-bottom: 15px;
+    }
+
+    .skill-bar span {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .progress {
+      width: 100%;
+      height: 10px;
+      background: #cbd5e1;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    .education-box {
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .contact-item a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      opacity: 0.7;
+    }
+
+    @media(max-width:768px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <h2>Vinayak P</h2>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <!-- HOME SECTION -->
+  <section id="home" class="hero reveal">
+    <div class="hero-content" style="text-align:center;">
+      <img src="profile.jpg" class="profile-glow" alt="Vinayak P" style="width:160px;height:160px;border-radius:50%;margin:0 auto 20px;border:4px solid var(--primary);display:block;">
+      <h1 style="margin-top:10px;">Hello, I'm <span>Vinayak P</span></h1>
+      <h3><span id="typing"></span></h3>
+      <p>
+        I am a Computer Science Engineering student at Excel Engineering College, Tamil Nadu. 
+        Passionate about building web applications and learning new technologies.
+      </p>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="reveal">
+    <h2 class="section-title">About Me</h2>
+    <div class="card" style="max-width:800px;margin:auto;line-height:1.8;">
+      <p>
+        I am a passionate Front End Developer and a Computer Science Engineering student at Excel Engineering College, Tamil Nadu. 
+        I enjoy designing clean user interfaces and building responsive web applications. My goal is to become a professional 
+        full stack developer by continuously improving my technical and problem-solving skills.
+      </p>
+      <br>
+      <p>
+        I actively practice coding, explore modern web technologies, and work on improving my programming fundamentals in Python, Java, and JavaScript. 
+        I believe in consistent learning and adapting to new tools and frameworks.
+      </p>
+    </div>
+  </section>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills" class="reveal">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-grid">
+
+      <div class="card">
+        <div class="skill-bar">
+          <span>Python - Basic</span>
+          <div class="progress" style="height:14px;border-radius:20px;"><div class="progress-fill" style="width:40%"></div></div>
+        </div>
+
+        <div class="skill-bar">
+          <span>Java - Intermediate</span>
+          <div class="progress" style="height:14px;border-radius:20px;"><div class="progress-fill" style="width:65%"></div></div>
+        </div>
+
+        <div class="skill-bar">
+          <span>HTML - Basic</span>
+          <div class="progress" style="height:14px;border-radius:20px;"><div class="progress-fill" style="width:50%"></div></div>
+        </div>
+
+        <div class="skill-bar">
+          <span>CSS - Basic</span>
+          <div class="progress" style="height:14px;border-radius:20px;"><div class="progress-fill" style="width:50%"></div></div>
+        </div>
+
+        <div class="skill-bar">
+          <span>JavaScript - Basic</span>
+          <div class="progress" style="height:14px;border-radius:20px;"><div class="progress-fill" style="width:45%"></div></div>
+        </div>
+
+        <div class="skill-bar">
+          <span>SQL - Intermediate</span>
+          <div class="progress" style="height:14px;border-radius:20px;"><div class="progress-fill" style="width:65%"></div></div>
+        </div>
+      </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+<!-- CERTIFICATIONS SECTION -->
+<section id="certifications" class="reveal">
+  <h2 class="section-title">Certifications</h2>
+
+  <div class="cert-grid">
+
+    <div class="cert-card">
+      <img src="cert1.jpg" alt="NPTEL Certificate">
+      <h3>NPTEL</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert2.jpg" alt="NEXUS Certificate">
+      <h3>NEXUS</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert3.jpg" alt="HackerRank Certificate">
+      <h3>HackerRank (SQL - Intermediate)</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert5.jpg" alt="QUMIQ Internship">
+      <h3>QUMIQ Internship</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert4.jpg" alt="Wadhwani">
+      <h3>Wadhwani</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert6.jpeg" alt="Matlab Onramp">
+      <h3>Matlab Onramp</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert7.jpeg" alt="Machine learning Onramp">
+      <h3>Machine learning Onramp</h3>
+    </div>
+
+    <div class="cert-card">
+      <img src="cert8.jpg" alt="Unstop">
+      <h3>Unstop</h3>
+    </div>
+
+  </div>
+</section>
+
+    <!-- EXPERIENCE SECTION -->
+  <section id="experience" class="reveal">
+    <h2 class="section-title">Experience</h2>
+    <div class="skills-grid">
+      <div class="card">
+        <h3>Student Developer</h3>
+        <p>Self Learning & Academic Projects</p>
+        <p>
+          Currently improving skills through hands-on practice, mini projects, and academic coursework.
+          Gaining experience in frontend development and programming fundamentals.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Future Internship</h3>
+        <p>Looking for Opportunities</p>
+        <p>
+          Actively seeking internship opportunities to gain real-world industry experience and enhance full stack development skills.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="education" class="reveal">
+    <h2 class="section-title">Education</h2>
+    <div class="card education-box">
+      <h3>Bachelor of Engineering (B.E)</h3>
+      <p>Computer Science and Engineering (CSE)</p>
+      <p>Excel Engineering College, Komarapalayam, Namakkal District</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="reveal">
+    <h2 class="section-title">Contact</h2>
+    <div class="contact-grid">
+
+      <div class="card contact-item">
+        <i class="fas fa-envelope"></i>
+        <p>Email</p>
+        <a href="mailto:vinayakpmadhav12345@gmail.com">vinayakpmadhav12345@gmail.com</a>
+      </div>
+
+      <div class="card contact-item">
+        <i class="fab fa-github"></i>
+        <p>GitHub</p>
+        <a href="https://github.com/Vinayak1560" target="_blank">github.com/Vinayak1560</a>
+      </div>
+
+      <div class="card contact-item">
+        <i class="fab fa-linkedin"></i>
+        <p>LinkedIn</p>
+        <a href="https://www.linkedin.com/in/vinayak-p-090521348" target="_blank">View Profile</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+    <!-- INTERESTS SECTION -->
+  <section id="interests" class="reveal">
+    <h2 class="section-title">Interests</h2>
+    <div class="skills-grid">
+      <div class="card">Web Development</div>
+      <div class="card">UI/UX Design</div>
+      <div class="card">Problem Solving</div>
+      <div class="card">Learning New Technologies</div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Vinayak P | Portfolio Website</p>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    function revealOnScroll() {
+      reveals.forEach(section => {
+        const windowHeight = window.innerHeight;
+        const sectionTop = section.getBoundingClientRect().top;
+        const revealPoint = 100;
+
+        if (sectionTop < windowHeight - revealPoint) {
+          section.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+  </script>
+
+  <script>
+    /* Typing Animation */
+    const text = "Front End Developer";
+    let index = 0;
+    const typingElement = document.getElementById("typing");
+
+    function typeEffect() {
+      if (index < text.length) {
+        typingElement.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeEffect, 120);
+      }
+    }
+    typeEffect();
+
+    /* Navbar Active Highlight on Scroll */
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll("nav a");
+
+    window.addEventListener("scroll", () => {
+      let current = "";
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 120;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute("id");
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href") === `#${current}`) {
+          link.classList.add("active");
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
